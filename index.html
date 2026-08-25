@@ -1,1 +1,887 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
+<title>Global Finance Radar｜全球財經雷達</title>
+
+<style>
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  font-family: "Microsoft JhengHei", Arial, sans-serif;
+  background: linear-gradient(135deg,#fff8e8,#eefaff,#f7efff);
+  color: #263238;
+}
+
+header {
+  text-align: center;
+  padding: 45px 20px;
+  background: linear-gradient(120deg,#ffe082,#80deea,#ce93d8);
+}
+
+header h1 {
+  margin: 0;
+  font-size: 36px;
+}
+
+header p {
+  margin: 10px 0 0;
+}
+
+.container {
+  max-width: 1150px;
+  margin: auto;
+  padding: 25px;
+}
+
+.card {
+  background: white;
+  margin-bottom: 22px;
+  padding: 22px;
+  border-radius: 20px;
+  box-shadow: 0 7px 22px rgba(0,0,0,.07);
+}
+
+.card h2 {
+  margin-top: 0;
+}
+
+/* 市場溫度 */
+
+.market-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit,minmax(170px,1fr));
+  gap: 15px;
+}
+
+.market-box {
+  padding: 18px;
+  border-radius: 16px;
+  text-align: center;
+}
+
+.market-box strong {
+  display: block;
+  font-size: 20px;
+  margin-top: 7px;
+}
+
+.yellow {
+  background: #fff4c2;
+}
+
+.green {
+  background: #dcf7e8;
+}
+
+.red {
+  background: #ffdede;
+}
+
+/* 標籤 */
+
+.badge {
+  display: inline-block;
+  padding: 6px 11px;
+  margin: 4px;
+  border-radius: 20px;
+  font-size: 12px;
+}
+
+.official {
+  background: #dcf7e8;
+}
+
+.media {
+  background: #e3f2fd;
+}
+
+.warning {
+  background: #fff4c2;
+}
+
+/* Trump */
+
+.trump {
+  border-left: 6px solid #ffb74d;
+}
+
+.status-flow {
+  padding: 15px;
+  background: #fff8e1;
+  border-radius: 14px;
+  line-height: 1.9;
+}
+
+/* 資產 */
+
+.asset {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 14px 5px;
+  border-bottom: 1px solid #eee;
+}
+
+.asset:last-child {
+  border-bottom: none;
+}
+
+.signal {
+  padding: 7px 12px;
+  border-radius: 20px;
+  white-space: nowrap;
+}
+
+.signal-yellow {
+  background: #fff4c2;
+}
+
+.signal-green {
+  background: #dcf7e8;
+}
+
+.signal-red {
+  background: #ffdede;
+}
+
+/* 自選股 */
+
+.stock-input {
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+.stock-input input {
+  flex: 1;
+  min-width: 200px;
+  padding: 13px;
+  border: 1px solid #ccc;
+  border-radius: 12px;
+  font-size: 16px;
+}
+
+button {
+  border: none;
+  padding: 13px 20px;
+  border-radius: 12px;
+  background: #42a5f5;
+  color: white;
+  cursor: pointer;
+  font-size: 15px;
+}
+
+button:hover:not(:disabled) {
+  background: #1e88e5;
+}
+
+button:disabled {
+  background: #bbb;
+  cursor: not-allowed;
+}
+
+.stock-item {
+  display: inline-block;
+  margin: 10px 5px 0 0;
+  padding: 8px 13px;
+  border-radius: 20px;
+  background: #ede7f6;
+}
+
+/* 免責跳窗 */
+
+.disclaimer-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 99999;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  padding: 20px;
+
+  background: rgba(20,30,40,.76);
+  backdrop-filter: blur(7px);
+}
+
+.disclaimer-modal {
+  width: 100%;
+  max-width: 620px;
+  max-height: 90vh;
+  overflow-y: auto;
+
+  background: white;
+  padding: 28px;
+  border-radius: 24px;
+
+  box-shadow: 0 25px 70px rgba(0,0,0,.3);
+}
+
+.disclaimer-icon {
+  text-align: center;
+  font-size: 45px;
+}
+
+.disclaimer-modal h2 {
+  text-align: center;
+}
+
+.disclaimer-content {
+  background: #f7f8fa;
+  border-radius: 15px;
+  padding: 16px;
+  margin: 20px 0;
+  line-height: 1.8;
+  font-size: 14px;
+}
+
+.disclaimer-modal label {
+  display: block;
+  margin: 15px 0;
+}
+
+.disclaimer-modal button {
+  width: 100%;
+}
+
+/* 底部免責 */
+
+.notice {
+  line-height: 1.8;
+  font-size: 14px;
+}
+
+footer {
+  text-align: center;
+  padding: 30px;
+  color: #777;
+}
+
+.small {
+  font-size: 13px;
+  color: #777;
+}
+
+@media(max-width:600px) {
+
+  header h1 {
+    font-size: 28px;
+  }
+
+  .asset {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 8px;
+  }
+
+}
+</style>
+</head>
+
+
+<body>
+
+<!-- =================================
+首次進站免責聲明
+================================= -->
+
+<div id="disclaimerModal" class="disclaimer-overlay">
+
+  <div class="disclaimer-modal">
+
+    <div class="disclaimer-icon">
+      ⚠️
+    </div>
+
+    <h2>使用前請先閱讀</h2>
+
+    <p>
+      歡迎使用
+      <strong>Global Finance Radar 全球財經雷達</strong>。
+    </p>
+
+    <div class="disclaimer-content">
+
+      <p>
+        📊 本網站所提供之國際財經新聞整理、
+        市場資訊及分析內容，
+        僅供一般資訊、學習與研究參考。
+      </p>
+
+      <p>
+        💰 網站中的偏正面、偏負面、觀察、
+        高風險或相關度等資訊，
+        不代表買進、賣出或持有建議。
+      </p>
+
+      <p>
+        🤖 未來部分新聞摘要、分類與市場影響分析
+        可能由程式或 AI 自動產生，
+        可能存在錯誤、遺漏或資訊延遲。
+      </p>
+
+      <p>
+        🇺🇸 政治人物或政府官員的公開發言，
+        不代表相關政策已正式生效。
+        重要政策應以政府正式公告為準。
+      </p>
+
+      <p>
+        ⚠️ 股票、ETF、基金、債券、外匯、
+        黃金及加密資產均具有價格波動與
+        本金損失風險。
+      </p>
+
+      <p>
+        📰 第三方新聞、資料及商標之相關權利，
+        均屬原權利人所有。
+      </p>
+
+    </div>
+
+    <label>
+      <input
+        type="checkbox"
+        id="agreeCheckbox">
+      我已閱讀並了解以上免責聲明
+    </label>
+
+    <button
+      id="agreeButton"
+      onclick="acceptDisclaimer()"
+      disabled>
+      同意並進入網站
+    </button>
+
+  </div>
+
+</div>
+
+
+<!-- =================================
+HEADER
+================================= -->
+
+<header>
+
+  <h1>🌍 Global Finance Radar</h1>
+
+  <p>
+    全球財經 × 政策 × 市場 × 投資觀察
+  </p>
+
+</header>
+
+
+<main class="container">
+
+
+<!-- 市場 -->
+
+<section class="card">
+
+  <h2>🌡️ 今日市場溫度</h2>
+
+  <div class="market-grid">
+
+    <div class="market-box yellow">
+      🌎 全球市場
+      <strong>🟡 等待資料</strong>
+    </div>
+
+    <div class="market-box yellow">
+      🇺🇸 美國市場
+      <strong>🟡 等待資料</strong>
+    </div>
+
+    <div class="market-box yellow">
+      🤖 AI / 半導體
+      <strong>🟡 等待資料</strong>
+    </div>
+
+    <div class="market-box yellow">
+      ₿ Crypto
+      <strong>🟡 等待資料</strong>
+    </div>
+
+  </div>
+
+  <p class="small">
+    ※ 初版尚未串接即時市場資料。
+  </p>
+
+</section>
+
+
+<!-- 新聞 -->
+
+<section class="card">
+
+  <h2>🔥 今日全球財經 TOP 5</h2>
+
+  <p>
+    📰 尚未串接即時國際財經新聞。
+  </p>
+
+  <p>
+    下一階段將優先串接官方資料與可信新聞來源。
+  </p>
+
+</section>
+
+
+<!-- 可信來源 -->
+
+<section class="card">
+
+  <h2>🛡️ 資料來源</h2>
+
+  <p>
+    未來系統將優先使用官方原始資料，
+    再搭配具公信力的國際新聞來源。
+  </p>
+
+  <span class="badge official">
+    🟢 Federal Reserve
+  </span>
+
+  <span class="badge official">
+    🟢 White House
+  </span>
+
+  <span class="badge official">
+    🟢 BEA
+  </span>
+
+  <span class="badge official">
+    🟢 BLS
+  </span>
+
+  <span class="badge official">
+    🟢 SEC
+  </span>
+
+  <span class="badge media">
+    🔵 國際可信媒體
+  </span>
+
+</section>
+
+
+<!-- Trump -->
+
+<section class="card trump">
+
+  <h2>🇺🇸 Trump Market Watch</h2>
+
+  <p>
+    追蹤川普公開發言、美國政府政策與市場可能受到的影響。
+  </p>
+
+  <div class="status-flow">
+
+    💬 公開發言
+
+    →
+
+    📰 媒體確認
+
+    →
+
+    🏛️ White House 公告
+
+    →
+
+    📜 正式政策
+
+  </div>
+
+  <br>
+
+  <strong>目前狀態：</strong>
+
+  <span class="badge warning">
+    等待資料串接
+  </span>
+
+  <p class="small">
+    政治人物發言與正式政策將分開呈現。
+  </p>
+
+</section>
+
+
+<!-- FED -->
+
+<section class="card">
+
+  <h2>🏦 Fed Watch</h2>
+
+  <div class="asset">
+
+    <div>
+      💵 <strong>政策利率</strong>
+    </div>
+
+    <span class="signal signal-yellow">
+      等待 API
+    </span>
+
+  </div>
+
+  <div class="asset">
+
+    <div>
+      📈 <strong>美國通膨</strong>
+    </div>
+
+    <span class="signal signal-yellow">
+      等待 API
+    </span>
+
+  </div>
+
+  <div class="asset">
+
+    <div>
+      👷 <strong>美國就業</strong>
+    </div>
+
+    <span class="signal signal-yellow">
+      等待 API
+    </span>
+
+  </div>
+
+  <div class="asset">
+
+    <div>
+      📜 <strong>10 年期美債</strong>
+    </div>
+
+    <span class="signal signal-yellow">
+      等待 API
+    </span>
+
+  </div>
+
+</section>
+
+
+<!-- 台灣 -->
+
+<section class="card">
+
+  <h2>🇹🇼 Taiwan Impact</h2>
+
+  <p>
+    未來這裡會分析全球重大事件與台灣市場的關聯。
+  </p>
+
+  <div class="asset">
+
+    <strong>🤖 AI / 半導體</strong>
+
+    <span class="signal signal-yellow">
+      等待分析
+    </span>
+
+  </div>
+
+  <div class="asset">
+
+    <strong>💵 美元 / 新台幣</strong>
+
+    <span class="signal signal-yellow">
+      等待分析
+    </span>
+
+  </div>
+
+  <div class="asset">
+
+    <strong>🇺🇸 美國政策</strong>
+
+    <span class="signal signal-yellow">
+      等待分析
+    </span>
+
+  </div>
+
+  <div class="asset">
+
+    <strong>🇨🇳 中國經濟</strong>
+
+    <span class="signal signal-yellow">
+      等待分析
+    </span>
+
+  </div>
+
+</section>
+
+
+<!-- 我的投資組合 -->
+
+<section class="card">
+
+  <h2>💼 我的投資觀察清單</h2>
+
+  <p>
+    可以先加入股票、ETF 或 Crypto。
+  </p>
+
+  <div class="stock-input">
+
+    <input
+      id="stockInput"
+      placeholder="例如：0050、NVDA、BTC">
+
+    <button onclick="addStock()">
+      ＋ 加入
+    </button>
+
+  </div>
+
+  <div id="stockList"></div>
+
+  <br>
+
+  <p class="small">
+    未來會把你的觀察清單與每日重大財經事件進行關聯分析。
+  </p>
+
+</section>
+
+
+<!-- 完整免責 -->
+
+<section class="card notice">
+
+  <h2>⚠️ 免責聲明</h2>
+
+  <p>
+    本網站所提供之國際財經新聞整理、
+    市場資訊、事件分類、AI 分析、
+    資產相關度及市場觀察，
+    僅供一般資訊、教育及研究參考使用。
+  </p>
+
+  <p>
+    所有內容均不構成股票、ETF、基金、
+    債券、外匯、黃金、加密資產或其他
+    金融商品之買進、賣出、持有或個人化投資建議。
+  </p>
+
+  <p>
+    本網站可能使用政府機關、中央銀行、
+    公開 API、RSS 或第三方新聞來源。
+    資料可能存在延遲、錯誤、遺漏或後續修正，
+    重要資訊應以原始官方來源為準。
+  </p>
+
+  <p>
+    部分分類、摘要及市場影響分析未來可能由
+    自動化程式或人工智慧產生，
+    不應作為投資決策的唯一依據。
+  </p>
+
+  <p>
+    投資具有風險，過去績效不代表未來結果，
+    使用者應依自身財務狀況與風險承受能力自行判斷。
+  </p>
+
+</section>
+
+
+</main>
+
+
+<footer>
+
+  🌍 Global Finance Radar
+
+  <br><br>
+
+  GitHub × Vercel
+
+  <br>
+
+  V1 Prototype
+
+</footer>
+
+
+<script>
+
+/* =================================
+免責聲明
+================================= */
+
+const modal =
+  document.getElementById("disclaimerModal");
+
+const checkbox =
+  document.getElementById("agreeCheckbox");
+
+const agreeButton =
+  document.getElementById("agreeButton");
+
+
+const accepted =
+  localStorage.getItem(
+    "financeRadarDisclaimerAccepted"
+  );
+
+
+if (accepted === "true") {
+  modal.style.display = "none";
+}
+
+
+checkbox.addEventListener(
+  "change",
+  function() {
+
+    agreeButton.disabled =
+      !checkbox.checked;
+
+  }
+);
+
+
+function acceptDisclaimer() {
+
+  if (!checkbox.checked) {
+    return;
+  }
+
+  localStorage.setItem(
+    "financeRadarDisclaimerAccepted",
+    "true"
+  );
+
+  modal.style.display = "none";
+}
+
+
+/* =================================
+我的觀察清單
+================================= */
+
+let stocks =
+  JSON.parse(
+    localStorage.getItem(
+      "financeRadarStocks"
+    )
+  ) || [];
+
+
+function renderStocks() {
+
+  const list =
+    document.getElementById("stockList");
+
+  list.innerHTML = "";
+
+  stocks.forEach(
+    function(stock,index) {
+
+      const item =
+        document.createElement("span");
+
+      item.className =
+        "stock-item";
+
+      item.innerHTML =
+        stock +
+        `
+        <span
+          onclick="removeStock(${index})"
+          style="
+            margin-left:8px;
+            cursor:pointer;
+            font-weight:bold;
+          "
+        >
+        ×
+        </span>
+        `;
+
+      list.appendChild(item);
+
+    }
+  );
+
+}
+
+
+function addStock() {
+
+  const input =
+    document.getElementById("stockInput");
+
+  const stock =
+    input.value
+      .trim()
+      .toUpperCase();
+
+  if (!stock) {
+    return;
+  }
+
+  if (!stocks.includes(stock)) {
+    stocks.push(stock);
+  }
+
+  localStorage.setItem(
+    "financeRadarStocks",
+    JSON.stringify(stocks)
+  );
+
+  input.value = "";
+
+  renderStocks();
+}
+
+
+function removeStock(index) {
+
+  stocks.splice(index,1);
+
+  localStorage.setItem(
+    "financeRadarStocks",
+    JSON.stringify(stocks)
+  );
+
+  renderStocks();
+}
+
+
+document
+  .getElementById("stockInput")
+  .addEventListener(
+    "keydown",
+    function(event) {
+
+      if (event.key === "Enter") {
+        addStock();
+      }
+
+    }
+  );
+
+
+renderStocks();
+
+</script>
+
+</body>
+</html>
