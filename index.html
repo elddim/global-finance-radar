@@ -1,1170 +1,1093 @@
 <!DOCTYPE html>
 <html lang="zh-Hant">
 <head>
-<meta charset="UTF-8">
-
-<meta
-  name="viewport"
-  content="width=device-width, initial-scale=1.0"
-/>
-
-<title>全球財經投資雷達</title>
-
-<style>
-
-* {
-  box-sizing: border-box;
-}
-
-body {
-  margin: 0;
-  font-family:
-    Arial,
-    "Microsoft JhengHei",
-    sans-serif;
-
-  background: #f5f8ff;
-  color: #26324a;
-}
-
-header {
-  background:
-    linear-gradient(
-      135deg,
-      #4169e1,
-      #755bea
-    );
-
-  color: white;
-  padding: 46px 20px;
-}
-
-.header-inner {
-  max-width: 1200px;
-  margin: auto;
-}
-
-header h1 {
-  margin: 0 0 10px;
-  font-size: 38px;
-}
-
-header p {
-  margin: 0;
-  opacity: .9;
-}
-
-.container {
-  max-width: 1200px;
-  margin: auto;
-  padding: 28px 20px;
-}
-
-
-/* ===== Dashboard ===== */
-
-.dashboard {
-  display: grid;
-  grid-template-columns:
-    repeat(4, 1fr);
-
-  gap: 15px;
-}
-
-.stat {
-  background: white;
-  padding: 20px;
-
-  border-radius: 17px;
-
-  box-shadow:
-    0 4px 18px
-    rgba(0,0,0,.06);
-}
-
-.stat small {
-  color: #7b8497;
-}
-
-.stat strong {
-  display: block;
-  margin-top: 6px;
-
-  font-size: 21px;
-}
-
-
-/* ===== Controls ===== */
-
-.controls {
-  display: flex;
-  gap: 10px;
-
-  margin: 25px 0;
-
-  flex-wrap: wrap;
-}
-
-button {
-  border: none;
-
-  background: white;
-
-  padding:
-    10px 16px;
-
-  border-radius: 20px;
-
-  cursor: pointer;
-
-  box-shadow:
-    0 3px 10px
-    rgba(0,0,0,.05);
-}
-
-button:hover {
-  background: #4169e1;
-  color: white;
-}
-
-button.active {
-  background: #4169e1;
-  color: white;
-}
-
-
-/* ===== Section ===== */
-
-.section-title {
-  margin-top: 35px;
-  font-size: 26px;
-}
-
-
-/* ===== Status ===== */
-
-.status-box {
-  padding: 15px 18px;
-
-  border-radius: 12px;
-
-  margin: 16px 0;
-
-  background: #edf2ff;
-}
-
-.loading {
-  color: #4169e1;
-}
-
-.error {
-  background: #ffeaea;
-  color: #b83737;
-}
-
-
-/* ===== News ===== */
-
-.news-grid {
-  display: grid;
-
-  grid-template-columns:
-    repeat(2, 1fr);
-
-  gap: 18px;
-}
-
-.news-card {
-  background: white;
-
-  padding: 20px;
-
-  border-radius: 17px;
-
-  box-shadow:
-    0 4px 18px
-    rgba(0,0,0,.06);
-
-  transition: .2s;
-}
-
-.news-card:hover {
-  transform:
-    translateY(-3px);
-}
-
-.news-top {
-  display: flex;
-
-  justify-content:
-    space-between;
-
-  gap: 10px;
-
-  margin-bottom: 10px;
-}
-
-.source {
-  color: #4169e1;
-  font-size: 13px;
-  font-weight: bold;
-}
-
-.news-date {
-  color: #9199aa;
-  font-size: 12px;
-}
-
-.news-card h3 {
-  margin:
-    8px 0 14px;
-
-  font-size: 18px;
-}
-
-.news-card a {
-  text-decoration: none;
-  color: inherit;
-}
-
-.news-card a:hover {
-  color: #4169e1;
-}
-
-.news-footer {
-  border-top:
-    1px solid #eee;
-
-  padding-top: 12px;
-
-  font-size: 13px;
-
-  color: #7c8494;
-}
-
-
-/* ===== Radar ===== */
-
-.radar {
-  display: grid;
-
-  grid-template-columns:
-    repeat(4,1fr);
-
-  gap: 15px;
-}
-
-.radar-card {
-  background: white;
-
-  border-radius: 16px;
-
-  padding: 20px;
-
-  text-align: center;
-
-  box-shadow:
-    0 4px 18px
-    rgba(0,0,0,.06);
-}
-
-.radar-icon {
-  font-size: 30px;
-}
-
-.tag {
-  display: inline-block;
-
-  margin-top: 10px;
-
-  border-radius: 20px;
-
-  padding: 5px 12px;
-
-  font-weight: bold;
-}
-
-.yellow {
-  background: #fff4cf;
-  color: #946900;
-}
-
-.green {
-  background: #e4f7ee;
-  color: #17754f;
-}
-
-.red {
-  background: #ffe7e7;
-  color: #bb3535;
-}
-
-
-/* ===== Notice ===== */
-
-.notice {
-  margin-top: 35px;
-
-  padding: 20px;
-
-  background: #fff8e4;
-
-  border-radius: 15px;
-
-  border:
-    1px solid #f0d58a;
-}
-
-
-/* ===== Modal ===== */
-
-#modal {
-
-  position: fixed;
-
-  inset: 0;
-
-  background:
-    rgba(0,0,0,.55);
-
-  display: flex;
-
-  align-items: center;
-
-  justify-content: center;
-
-  z-index: 1000;
-}
-
-.modal-card {
-
-  background: white;
-
-  width: 90%;
-
-  max-width: 520px;
-
-  padding: 28px;
-
-  border-radius: 18px;
-}
-
-.modal-card button {
-
-  width: 100%;
-
-  background: #4169e1;
-
-  color: white;
-
-  border-radius: 10px;
-}
-
-
-/* ===== Footer ===== */
-
-footer {
-
-  margin-top: 50px;
-
-  background: #202940;
-
-  color: white;
-
-  text-align: center;
-
-  padding: 25px;
-
-  font-size: 14px;
-}
-
-
-/* ===== Mobile ===== */
-
-@media(max-width:800px) {
-
-  .dashboard,
-  .radar {
-
-    grid-template-columns:
-      repeat(2,1fr);
-  }
-
-  .news-grid {
-    grid-template-columns: 1fr;
-  }
-}
-
-@media(max-width:500px) {
-
-  .dashboard,
-  .radar {
-
-    grid-template-columns: 1fr;
-  }
-
-  header h1 {
-    font-size: 29px;
-  }
-}
-
-</style>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <title>全球財經投資雷達</title>
+
+  <style>
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      font-family: Arial, "Microsoft JhengHei", sans-serif;
+      background: #f5f8ff;
+      color: #26324a;
+    }
+
+    header {
+      background: linear-gradient(135deg, #4169e1, #755bea);
+      color: white;
+      padding: 46px 20px;
+    }
+
+    .header-inner {
+      max-width: 1200px;
+      margin: auto;
+    }
+
+    header h1 {
+      margin: 0 0 10px;
+      font-size: 38px;
+    }
+
+    header p {
+      margin: 0;
+      opacity: 0.9;
+    }
+
+    .container {
+      max-width: 1200px;
+      margin: auto;
+      padding: 28px 20px;
+    }
+
+    .dashboard {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 15px;
+    }
+
+    .stat {
+      background: white;
+      padding: 20px;
+      border-radius: 17px;
+      box-shadow: 0 4px 18px rgba(0, 0, 0, 0.06);
+    }
+
+    .stat small {
+      color: #7b8497;
+    }
+
+    .stat strong {
+      display: block;
+      margin-top: 6px;
+      font-size: 21px;
+    }
+
+    .section-title {
+      margin-top: 35px;
+      font-size: 26px;
+    }
+
+    .controls {
+      display: flex;
+      gap: 10px;
+      margin: 25px 0;
+      flex-wrap: wrap;
+    }
+
+    button {
+      border: none;
+      background: white;
+      padding: 10px 16px;
+      border-radius: 20px;
+      cursor: pointer;
+      box-shadow: 0 3px 10px rgba(0, 0, 0, 0.05);
+    }
+
+    button:hover {
+      background: #4169e1;
+      color: white;
+    }
+
+    button.active {
+      background: #4169e1;
+      color: white;
+    }
+
+    .status-box {
+      padding: 15px 18px;
+      border-radius: 12px;
+      margin: 16px 0;
+      background: #edf2ff;
+    }
+
+    .loading {
+      color: #4169e1;
+    }
+
+    .error {
+      background: #ffeaea;
+      color: #b83737;
+    }
+
+    .news-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 18px;
+    }
+
+    .news-card {
+      background: white;
+      padding: 20px;
+      border-radius: 17px;
+      box-shadow: 0 4px 18px rgba(0, 0, 0, 0.06);
+      transition: 0.2s;
+    }
+
+    .news-card:hover {
+      transform: translateY(-3px);
+    }
+
+    .news-top {
+      display: flex;
+      justify-content: space-between;
+      gap: 10px;
+      margin-bottom: 10px;
+    }
+
+    .source {
+      color: #4169e1;
+      font-size: 13px;
+      font-weight: bold;
+    }
+
+    .news-date {
+      color: #9199aa;
+      font-size: 12px;
+    }
+
+    .category-badge {
+      display: inline-block;
+      padding: 5px 10px;
+      border-radius: 15px;
+      background: #edf2ff;
+      color: #4169e1;
+      font-size: 13px;
+      margin-bottom: 10px;
+    }
+
+    .news-card h3 {
+      margin: 8px 0 14px;
+      font-size: 18px;
+    }
+
+    .news-card a {
+      text-decoration: none;
+      color: inherit;
+    }
+
+    .news-card a:hover {
+      color: #4169e1;
+    }
+
+    .analysis-box {
+      background: #f7f9ff;
+      border-radius: 12px;
+      padding: 13px;
+      margin-top: 12px;
+    }
+
+    .news-footer {
+      border-top: 1px solid #eee;
+      padding-top: 12px;
+      margin-top: 14px;
+      font-size: 13px;
+      color: #7c8494;
+    }
+
+    .radar {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 15px;
+    }
+
+    .radar-card {
+      background: white;
+      border-radius: 16px;
+      padding: 20px;
+      text-align: center;
+      box-shadow: 0 4px 18px rgba(0, 0, 0, 0.06);
+    }
+
+    .radar-icon {
+      font-size: 30px;
+    }
+
+    .tag {
+      display: inline-block;
+      margin-top: 10px;
+      border-radius: 20px;
+      padding: 5px 12px;
+      font-weight: bold;
+    }
+
+    .yellow {
+      background: #fff4cf;
+      color: #946900;
+    }
+
+    .green {
+      background: #e4f7ee;
+      color: #17754f;
+    }
+
+    .red {
+      background: #ffe7e7;
+      color: #bb3535;
+    }
+
+    .notice {
+      margin-top: 35px;
+      padding: 20px;
+      background: #fff8e4;
+      border-radius: 15px;
+      border: 1px solid #f0d58a;
+    }
+
+    #modal {
+      position: fixed;
+      inset: 0;
+      background: rgba(0, 0, 0, 0.55);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      z-index: 1000;
+    }
+
+    .modal-card {
+      background: white;
+      width: 90%;
+      max-width: 520px;
+      padding: 28px;
+      border-radius: 18px;
+    }
+
+    .modal-card button {
+      width: 100%;
+      background: #4169e1;
+      color: white;
+      border-radius: 10px;
+    }
+
+    footer {
+      margin-top: 50px;
+      background: #202940;
+      color: white;
+      text-align: center;
+      padding: 25px;
+      font-size: 14px;
+    }
+
+    @media (max-width: 800px) {
+      .dashboard,
+      .radar {
+        grid-template-columns: repeat(2, 1fr);
+      }
+
+      .news-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    @media (max-width: 500px) {
+      .dashboard,
+      .radar {
+        grid-template-columns: 1fr;
+      }
+
+      header h1 {
+        font-size: 29px;
+      }
+    }
+  </style>
 </head>
 
 <body>
 
+  <div id="modal">
+    <div class="modal-card">
+      <h2>⚠️ 投資資訊免責聲明</h2>
 
-<!-- 免責聲明 -->
+      <p>
+        本網站整理公開財經新聞與市場資訊，
+        僅供資訊整理與教育用途。
+      </p>
 
-<div id="modal">
+      <p>
+        新聞內容及市場雷達不構成任何股票、
+        ETF、基金、債券或虛擬資產之買賣建議。
+      </p>
 
-  <div class="modal-card">
+      <p>
+        投資具有風險，使用者應自行判斷並承擔投資結果。
+      </p>
 
-    <h2>
-      ⚠️ 投資資訊免責聲明
-    </h2>
-
-    <p>
-      本網站整理公開財經新聞與市場資訊，
-      僅供資訊整理與教育用途。
-    </p>
-
-    <p>
-      新聞內容及市場雷達不構成任何
-      股票、ETF、基金、債券或虛擬資產
-      之買賣建議。
-    </p>
-
-    <p>
-      投資具有風險，
-      使用者應自行判斷並承擔投資結果。
-    </p>
-
-    <button onclick="closeModal()">
-      我了解，進入網站
-    </button>
-
+      <button onclick="closeModal()">
+        我了解，進入網站
+      </button>
+    </div>
   </div>
 
-</div>
+  <header>
+    <div class="header-inner">
+      <h1>🌍 全球財經投資雷達</h1>
+      <p>國際新聞 × 市場趨勢 × 投資觀察</p>
+    </div>
+  </header>
 
+  <main class="container">
 
-<header>
+    <div class="dashboard">
 
-  <div class="header-inner">
+      <div class="stat">
+        <small>📅 今日日期</small>
+        <strong id="today">--</strong>
+      </div>
 
-    <h1>
-      🌍 全球財經投資雷達
-    </h1>
+      <div class="stat">
+        <small>📰 最新新聞</small>
+        <strong id="newsCount">--</strong>
+      </div>
 
-    <p>
-      國際新聞 × 市場趨勢 × 投資觀察
-    </p>
+      <div class="stat">
+        <small>📡 市場狀態</small>
+        <strong id="marketStatus">🟡 觀察</strong>
+      </div>
 
-  </div>
+      <div class="stat">
+        <small>🔄 最後更新</small>
+        <strong id="updated">--</strong>
+      </div>
 
-</header>
-
-
-<main class="container">
-
-
-<!-- Dashboard -->
-
-<div class="dashboard">
-
-  <div class="stat">
-
-    <small>
-      📅 今日日期
-    </small>
-
-    <strong id="today">
-      --
-    </strong>
-
-  </div>
-
-
-  <div class="stat">
-
-    <small>
-      📰 最新新聞
-    </small>
-
-    <strong id="newsCount">
-      --
-    </strong>
-
-  </div>
-
-
-  <div class="stat">
-
-    <small>
-      📡 市場狀態
-    </small>
-
-    <strong>
-      🟡 觀察
-    </strong>
-
-  </div>
-
-
-  <div class="stat">
-
-    <small>
-      🔄 最後更新
-    </small>
-
-    <strong id="updated">
-      --
-    </strong>
-
-  </div>
-
-</div>
-
-
-
-<h2 class="section-title">
-  📰 全球財經新聞
-</h2>
-
-
-<!-- Filters -->
-
-<div class="controls">
-
-  <button
-    class="active"
-    onclick="filterNews('all',this)">
-    全部
-  </button>
-
-  <button
-    onclick="filterNews('AI',this)">
-    🤖 AI
-  </button>
-
-  <button
-    onclick="filterNews('stock',this)">
-    📈 股市
-  </button>
-
-  <button
-    onclick="filterNews('inflation',this)">
-    💵 通膨
-  </button>
-
-  <button
-    onclick="filterNews('bitcoin',this)">
-    ₿ Crypto
-  </button>
-
-</div>
-
-
-<div
-  id="status"
-  class="status-box loading">
-
-  🔄 正在取得全球財經新聞...
-
-</div>
-
-
-<div
-  id="news"
-  class="news-grid">
-</div>
-
-
-
-<h2 class="section-title">
-  📡 市場投資雷達
-</h2>
-
-
-<div class="radar">
-
-  <div class="radar-card">
-
-    <div class="radar-icon">
-      🇹🇼
     </div>
 
-    <h3>
-      台股
-    </h3>
+    <h2 class="section-title">📰 全球財經新聞</h2>
 
-    <span class="tag yellow">
-      🟡 觀察
-    </span>
+    <div class="controls">
 
-  </div>
+      <button class="active" onclick="filterNews('all', this)">
+        🌍 全部
+      </button>
 
+      <button onclick="filterNews('AI', this)">
+        🤖 AI / 半導體
+      </button>
 
-  <div class="radar-card">
+      <button onclick="filterNews('stock', this)">
+        📈 股市
+      </button>
 
-    <div class="radar-icon">
-      🇺🇸
+      <button onclick="filterNews('rate', this)">
+        🏦 利率
+      </button>
+
+      <button onclick="filterNews('inflation', this)">
+        💵 通膨
+      </button>
+
+      <button onclick="filterNews('bitcoin', this)">
+        ₿ Crypto
+      </button>
+
+      <button onclick="filterNews('energy', this)">
+        🛢 能源
+      </button>
+
+      <button onclick="filterNews('china', this)">
+        🇨🇳 中國
+      </button>
+
+      <button onclick="filterNews('japan', this)">
+        🇯🇵 日本
+      </button>
+
     </div>
 
-    <h3>
-      美股
-    </h3>
-
-    <span class="tag yellow">
-      🟡 觀察
-    </span>
-
-  </div>
-
-
-  <div class="radar-card">
-
-    <div class="radar-icon">
-      🥇
+    <div id="status" class="status-box loading">
+      🔄 正在取得全球財經新聞...
     </div>
 
-    <h3>
-      黃金
-    </h3>
+    <div id="news" class="news-grid"></div>
 
-    <span class="tag green">
-      🟢 防守
-    </span>
+    <h2 class="section-title">📡 市場投資雷達</h2>
 
-  </div>
+    <div class="radar">
 
+      <div class="radar-card">
+        <div class="radar-icon">🇹🇼</div>
+        <h3>台股</h3>
+        <span id="taiwanRadar" class="tag yellow">
+          🟡 觀察
+        </span>
+      </div>
 
-  <div class="radar-card">
+      <div class="radar-card">
+        <div class="radar-icon">🇺🇸</div>
+        <h3>美股</h3>
+        <span id="usRadar" class="tag yellow">
+          🟡 觀察
+        </span>
+      </div>
 
-    <div class="radar-icon">
-      ₿
+      <div class="radar-card">
+        <div class="radar-icon">🥇</div>
+        <h3>黃金</h3>
+        <span id="goldRadar" class="tag green">
+          🟢 防守
+        </span>
+      </div>
+
+      <div class="radar-card">
+        <div class="radar-icon">₿</div>
+        <h3>Crypto</h3>
+        <span id="cryptoRadar" class="tag red">
+          🔴 高波動
+        </span>
+      </div>
+
     </div>
 
-    <h3>
-      Crypto
-    </h3>
+    <div class="notice">
+      <strong>📌 關於新聞來源</strong>
+      <br><br>
+      本網站透過公開新聞資料服務取得新聞索引，
+      並連結回新聞媒體原始網站。
+      <br><br>
+      本站不儲存或全文轉載新聞文章，
+      新聞著作權屬於各原始媒體及作者。
+    </div>
 
-    <span class="tag red">
-      🔴 高波動
-    </span>
+    <div class="notice">
+      <strong>⚠️ 投資提醒</strong>
+      <br><br>
+      新聞只是投資判斷的資訊來源之一。
+      單一事件不代表市場一定上漲或下跌。
+      <br><br>
+      目前的「可能影響」與「投資觀察」
+      是依新聞標題關鍵字自動分類，
+      並不是 AI 投資建議。
+    </div>
 
-  </div>
+  </main>
 
-</div>
+  <footer>
+    🌍 Global Finance Radar
+    <br>
+    公開資訊整理｜教育用途｜不構成投資建議
+  </footer>
 
+  <script>
+    let allNews = [];
 
+    const today = new Date();
 
-<div class="notice">
-
-  <strong>
-    📌 關於新聞來源
-  </strong>
-
-  <br><br>
-
-  本網站透過公開新聞資料服務取得新聞索引，
-  並連結回新聞媒體原始網站。
-
-  <br><br>
-
-  本站不儲存或全文轉載新聞文章。
-  新聞著作權屬於各原始媒體及作者。
-
-</div>
-
-
-<div class="notice">
-
-  <strong>
-    ⚠️ 投資提醒
-  </strong>
-
-  <br><br>
-
-  新聞只是投資判斷的資訊來源之一。
-  單一事件不代表市場一定上漲或下跌。
-
-  <br><br>
-
-  市場雷達目前為展示性質，
-  未來版本才會加入真正的市場資料分析。
-
-</div>
+    document.getElementById("today").textContent =
+      today.toLocaleDateString("zh-TW");
 
 
-</main>
-
-
-<footer>
-
-🌍 Global Finance Radar
-
-<br>
-
-公開資訊整理｜教育用途｜
-不構成投資建議
-
-</footer>
-
-
-
-<script>
-
-let allNews = [];
-
-
-/* 日期 */
-
-const today =
-  new Date();
-
-document.getElementById(
-  "today"
-).textContent =
-  today.toLocaleDateString(
-    "zh-TW"
-  );
-
-
-
-/* 關閉聲明 */
-
-function closeModal() {
-
-  document.getElementById(
-    "modal"
-  ).style.display =
-    "none";
-}
-
-
-
-/* 抓新聞 */
-
-async function loadNews() {
-
-  const status =
-    document.getElementById(
-      "status"
-    );
-
-  try {
-
-    const response =
-      await fetch(
-        "/api/news"
-      );
-
-    if (!response.ok) {
-
-      throw new Error(
-        "API 回應錯誤"
-      );
-    }
-
-    const data =
-      await response.json();
-
-
-    if (!data.success) {
-
-      throw new Error(
-        data.error ||
-        "新聞取得失敗"
-      );
+    function closeModal() {
+      document.getElementById("modal").style.display = "none";
     }
 
 
-    allNews =
-      data.articles || [];
+    async function loadNews() {
+
+      const status =
+        document.getElementById("status");
+
+      try {
+
+        const response =
+          await fetch("/api/news");
+
+        if (!response.ok) {
+          throw new Error(
+            "API 回應錯誤：" + response.status
+          );
+        }
+
+        const data =
+          await response.json();
+
+        if (!data.success) {
+          throw new Error(
+            data.error || "新聞取得失敗"
+          );
+        }
+
+        allNews =
+          (data.articles || []).map(article => {
+
+            const analysis =
+              analyzeArticle(article.title);
+
+            return {
+              ...article,
+              ...analysis
+            };
+
+          });
+
+        document.getElementById(
+          "newsCount"
+        ).textContent =
+          allNews.length + " 則";
+
+        document.getElementById(
+          "updated"
+        ).textContent =
+          new Date(
+            data.updatedAt
+          ).toLocaleTimeString(
+            "zh-TW",
+            {
+              hour: "2-digit",
+              minute: "2-digit"
+            }
+          );
+
+        status.style.display =
+          "none";
+
+        renderNews(allNews);
+
+        updateRadar();
+
+      } catch (error) {
+
+        console.error(error);
+
+        status.className =
+          "status-box error";
+
+        status.innerHTML =
+          `
+          ❌ 暫時無法取得新聞。
+          <br><br>
+          ${escapeHTML(error.message)}
+          `;
+
+      }
+
+    }
 
 
-    document.getElementById(
-      "newsCount"
-    ).textContent =
-      allNews.length +
-      " 則";
+    function analyzeArticle(title) {
+
+      const text =
+        String(title || "").toLowerCase();
 
 
-    document.getElementById(
-      "updated"
-    ).textContent =
-      new Date(
-        data.updatedAt
-      ).toLocaleTimeString(
+      if (
+        includesAny(
+          text,
+          [
+            "nvidia",
+            "semiconductor",
+            "chip",
+            "artificial intelligence",
+            "openai",
+            "amd",
+            "tsmc",
+            "intel"
+          ]
+        )
+      ) {
+
+        return {
+          category: "🤖 AI / 半導體",
+          categoryKey: "AI",
+          impact: "台灣半導體、AI供應鏈、Nasdaq",
+          observation: "科技股可能出現較大波動",
+          risk: "yellow"
+        };
+
+      }
+
+
+      if (
+        includesAny(
+          text,
+          [
+            "federal reserve",
+            "fed ",
+            "interest rate",
+            "interest rates",
+            "rate cut",
+            "rate hike",
+            "powell",
+            "central bank"
+          ]
+        )
+      ) {
+
+        return {
+          category: "🏦 利率政策",
+          categoryKey: "rate",
+          impact: "美股、美債、美元、黃金",
+          observation: "利率預期可能改變資金流向",
+          risk: "yellow"
+        };
+
+      }
+
+
+      if (
+        includesAny(
+          text,
+          [
+            "inflation",
+            "cpi",
+            "pce",
+            "consumer prices"
+          ]
+        )
+      ) {
+
+        return {
+          category: "💵 通膨",
+          categoryKey: "inflation",
+          impact: "利率、美股、美元、黃金",
+          observation: "通膨數據可能影響降息預期",
+          risk: "yellow"
+        };
+
+      }
+
+
+      if (
+        includesAny(
+          text,
+          [
+            "bitcoin",
+            "btc",
+            "ethereum",
+            "ether",
+            "crypto",
+            "cryptocurrency"
+          ]
+        )
+      ) {
+
+        return {
+          category: "₿ Crypto",
+          categoryKey: "bitcoin",
+          impact: "Bitcoin、Ethereum、加密市場",
+          observation: "加密資產短期波動通常較高",
+          risk: "red"
+        };
+
+      }
+
+
+      if (
+        includesAny(
+          text,
+          [
+            "oil",
+            "crude",
+            "opec",
+            "energy",
+            "natural gas"
+          ]
+        )
+      ) {
+
+        return {
+          category: "🛢 能源",
+          categoryKey: "energy",
+          impact: "能源股、原油、通膨",
+          observation: "注意能源價格是否推升通膨",
+          risk: "yellow"
+        };
+
+      }
+
+
+      if (
+        includesAny(
+          text,
+          [
+            "china",
+            "chinese",
+            "beijing",
+            "yuan"
+          ]
+        )
+      ) {
+
+        return {
+          category: "🇨🇳 中國",
+          categoryKey: "china",
+          impact: "亞洲股市、原物料、出口產業",
+          observation: "關注中國需求與政策變化",
+          risk: "yellow"
+        };
+
+      }
+
+
+      if (
+        includesAny(
+          text,
+          [
+            "japan",
+            "japanese",
+            "yen",
+            "bank of japan",
+            "boj"
+          ]
+        )
+      ) {
+
+        return {
+          category: "🇯🇵 日本",
+          categoryKey: "japan",
+          impact: "日股、日圓、亞洲資金流向",
+          observation: "注意日圓與日本央行政策",
+          risk: "yellow"
+        };
+
+      }
+
+
+      if (
+        includesAny(
+          text,
+          [
+            "stocks",
+            "stock market",
+            "wall street",
+            "nasdaq",
+            "s&p 500",
+            "dow jones"
+          ]
+        )
+      ) {
+
+        return {
+          category: "📈 全球股市",
+          categoryKey: "stock",
+          impact: "美股、全球股票ETF",
+          observation: "觀察市場風險偏好",
+          risk: "yellow"
+        };
+
+      }
+
+
+      return {
+        category: "🌍 全球財經",
+        categoryKey: "other",
+        impact: "全球金融市場",
+        observation: "持續觀察後續市場反應",
+        risk: "green"
+      };
+
+    }
+
+
+    function includesAny(text, keywords) {
+
+      return keywords.some(
+        keyword =>
+          text.includes(
+            keyword.toLowerCase()
+          )
+      );
+
+    }
+
+
+    function renderNews(news) {
+
+      const container =
+        document.getElementById("news");
+
+      if (
+        !news ||
+        news.length === 0
+      ) {
+
+        container.innerHTML =
+          `
+          <div class="news-card">
+            目前找不到符合條件的新聞。
+          </div>
+          `;
+
+        return;
+
+      }
+
+      container.innerHTML =
+        news.map(article => {
+
+          const date =
+            formatDate(article.date);
+
+          return `
+          <article class="news-card">
+
+            <div class="news-top">
+
+              <span class="source">
+                ${escapeHTML(article.source)}
+              </span>
+
+              <span class="news-date">
+                ${escapeHTML(date)}
+              </span>
+
+            </div>
+
+            <div class="category-badge">
+              ${article.category}
+            </div>
+
+            <a
+              href="${safeUrl(article.url)}"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              <h3>
+                ${escapeHTML(article.title)}
+              </h3>
+            </a>
+
+            <div class="analysis-box">
+
+              <strong>
+                📊 可能影響
+              </strong>
+
+              <br>
+
+              ${escapeHTML(article.impact)}
+
+              <br><br>
+
+              <strong>
+                🔎 投資觀察
+              </strong>
+
+              <br>
+
+              ${escapeHTML(article.observation)}
+
+            </div>
+
+            <div class="news-footer">
+              🌐 點擊標題前往原始新聞來源
+            </div>
+
+          </article>
+          `;
+
+        }).join("");
+
+    }
+
+
+    function filterNews(type, button) {
+
+      document
+        .querySelectorAll(".controls button")
+        .forEach(
+          b => b.classList.remove("active")
+        );
+
+      button.classList.add("active");
+
+      if (type === "all") {
+
+        renderNews(allNews);
+        return;
+
+      }
+
+      const filtered =
+        allNews.filter(
+          article =>
+            article.categoryKey === type
+        );
+
+      renderNews(filtered);
+
+    }
+
+
+    function updateRadar() {
+
+      let aiCount = 0;
+      let rateCount = 0;
+      let cryptoCount = 0;
+      let riskCount = 0;
+
+      allNews.forEach(article => {
+
+        if (article.categoryKey === "AI") {
+          aiCount++;
+        }
+
+        if (
+          article.categoryKey === "rate" ||
+          article.categoryKey === "inflation"
+        ) {
+          rateCount++;
+        }
+
+        if (
+          article.categoryKey === "bitcoin"
+        ) {
+          cryptoCount++;
+        }
+
+        if (
+          article.risk === "red"
+        ) {
+          riskCount++;
+        }
+
+      });
+
+
+      if (
+        aiCount >= 5 ||
+        rateCount >= 5
+      ) {
+
+        document.getElementById(
+          "marketStatus"
+        ).textContent =
+          "🟠 波動升高";
+
+      }
+
+
+      if (rateCount >= 4) {
+
+        setRadar(
+          "usRadar",
+          "🟡 注意利率",
+          "yellow"
+        );
+
+        setRadar(
+          "goldRadar",
+          "🟡 關注利率",
+          "yellow"
+        );
+
+      }
+
+
+      if (aiCount >= 4) {
+
+        setRadar(
+          "taiwanRadar",
+          "🟡 科技波動",
+          "yellow"
+        );
+
+      }
+
+
+      if (cryptoCount >= 3) {
+
+        setRadar(
+          "cryptoRadar",
+          "🔴 高波動",
+          "red"
+        );
+
+      }
+
+    }
+
+
+    function setRadar(
+      id,
+      text,
+      color
+    ) {
+
+      const element =
+        document.getElementById(id);
+
+      element.textContent =
+        text;
+
+      element.className =
+        "tag " + color;
+
+    }
+
+
+    function formatDate(dateValue) {
+
+      if (!dateValue) {
+        return "";
+      }
+
+      const date =
+        new Date(dateValue);
+
+      if (
+        isNaN(date.getTime())
+      ) {
+
+        return dateValue;
+
+      }
+
+      return date.toLocaleString(
         "zh-TW",
         {
+          month: "2-digit",
+          day: "2-digit",
           hour: "2-digit",
           minute: "2-digit"
         }
       );
 
-
-    status.style.display =
-      "none";
-
-
-    renderNews(
-      allNews
-    );
-
-
-  } catch(error) {
-
-    console.error(
-      error
-    );
-
-    status.className =
-      "status-box error";
-
-    status.innerHTML =
-      `
-      ❌ 暫時無法取得新聞。
-      <br><br>
-      ${escapeHTML(
-        error.message
-      )}
-      `;
-  }
-
-}
-
-
-
-/* 顯示新聞 */
-
-function renderNews(news) {
-
-  const container =
-    document.getElementById(
-      "news"
-    );
-
-
-  if (
-    !news ||
-    news.length === 0
-  ) {
-
-    container.innerHTML =
-      `
-      <div class="news-card">
-
-        目前找不到符合條件的新聞。
-
-      </div>
-      `;
-
-    return;
-  }
-
-
-  container.innerHTML =
-    news.map(
-      article => {
-
-        const date =
-          formatDate(
-            article.date
-          );
-
-        return `
-        <article class="news-card">
-
-          <div class="news-top">
-
-            <span class="source">
-
-              ${escapeHTML(
-                article.source
-              )}
-
-            </span>
-
-            <span class="news-date">
-
-              ${date}
-
-            </span>
-
-          </div>
-
-
-          <a
-            href="${safeUrl(
-              article.url
-            )}"
-
-            target="_blank"
-
-            rel="noopener noreferrer"
-          >
-
-            <h3>
-
-              ${escapeHTML(
-                article.title
-              )}
-
-            </h3>
-
-          </a>
-
-
-          <div class="news-footer">
-
-            🌐 點擊標題前往原始新聞來源
-
-          </div>
-
-        </article>
-        `;
-
-      }
-    ).join("");
-
-}
-
-
-
-/* 分類 */
-
-function filterNews(
-  type,
-  button
-) {
-
-  document
-    .querySelectorAll(
-      ".controls button"
-    )
-    .forEach(
-      b =>
-        b.classList.remove(
-          "active"
-        )
-    );
-
-
-  button.classList.add(
-    "active"
-  );
-
-
-  if (
-    type === "all"
-  ) {
-
-    renderNews(
-      allNews
-    );
-
-    return;
-  }
-
-
-  const keywordMap = {
-
-    AI: [
-      "AI",
-      "artificial intelligence",
-      "Nvidia",
-      "semiconductor",
-      "chip"
-    ],
-
-    stock: [
-      "stock",
-      "stocks",
-      "market",
-      "Nasdaq",
-      "S&P",
-      "Dow"
-    ],
-
-    inflation: [
-      "inflation",
-      "interest rate",
-      "Fed",
-      "Federal Reserve",
-      "central bank"
-    ],
-
-    bitcoin: [
-      "bitcoin",
-      "crypto",
-      "ethereum",
-      "BTC",
-      "ETH"
-    ]
-
-  };
-
-
-  const keywords =
-    keywordMap[type] || [];
-
-
-  const filtered =
-    allNews.filter(
-      article => {
-
-        const title =
-          (
-            article.title ||
-            ""
-          ).toLowerCase();
-
-
-        return keywords.some(
-          keyword =>
-            title.includes(
-              keyword.toLowerCase()
-            )
-        );
-
-      }
-    );
-
-
-  renderNews(
-    filtered
-  );
-
-}
-
-
-
-/* 日期格式 */
-
-function formatDate(
-  gdeltDate
-) {
-
-  if (!gdeltDate) {
-
-    return "";
-  }
-
-
-  /*
-    GDELT 常見格式：
-    20260825T123000Z
-  */
-
-  const match =
-    gdeltDate.match(
-      /^(\d{4})(\d{2})(\d{2})T?(\d{2})?(\d{2})?/
-    );
-
-
-  if (!match) {
-
-    return gdeltDate;
-  }
-
-
-  return (
-    match[1] +
-    "/" +
-    match[2] +
-    "/" +
-    match[3]
-  );
-
-}
-
-
-
-/* 防止 HTML 注入 */
-
-function escapeHTML(
-  value
-) {
-
-  return String(
-    value || ""
-  )
-
-  .replace(
-    /&/g,
-    "&amp;"
-  )
-
-  .replace(
-    /</g,
-    "&lt;"
-  )
-
-  .replace(
-    />/g,
-    "&gt;"
-  )
-
-  .replace(
-    /"/g,
-    "&quot;"
-  )
-
-  .replace(
-    /'/g,
-    "&#039;"
-  );
-
-}
-
-
-
-/* URL 基本安全處理 */
-
-function safeUrl(
-  value
-) {
-
-  try {
-
-    const url =
-      new URL(
-        value
-      );
-
-
-    if (
-      url.protocol ===
-        "http:" ||
-
-      url.protocol ===
-        "https:"
-    ) {
-
-      return url.href;
     }
 
 
-    return "#";
+    function escapeHTML(value) {
 
-  } catch {
+      return String(value || "")
+        .replace(/&/g, "&amp;")
+        .replace(/</g, "&lt;")
+        .replace(/>/g, "&gt;")
+        .replace(/"/g, "&quot;")
+        .replace(/'/g, "&#039;");
 
-    return "#";
-
-  }
-
-}
+    }
 
 
+    function safeUrl(value) {
 
-/* 啟動 */
+      try {
 
-loadNews();
+        const url =
+          new URL(value);
 
-</script>
+        if (
+          url.protocol === "http:" ||
+          url.protocol === "https:"
+        ) {
+          return url.href;
+        }
+
+        return "#";
+
+      } catch {
+
+        return "#";
+
+      }
+
+    }
+
+
+    loadNews();
+  </script>
 
 </body>
 </html>
