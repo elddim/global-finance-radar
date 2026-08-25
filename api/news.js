@@ -1,74 +1,66 @@
 export default async function handler(req, res) {
   try {
 
-    // 第一版先用比較單純的搜尋條件
     const query =
-      '(economy OR inflation OR stocks OR bitcoin OR semiconductor)';
+      'economy OR stocks OR inflation OR "Federal Reserve" OR AI OR semiconductor OR bitcoin';
 
-    const url =
-      "https://api.gdeltproject.org/api/v2/doc/doc" +
-      "?query=" + encodeURIComponent(query) +
-      "&mode=artlist" +
-      "&maxrecords=30" +
-      "&timespan=24h" +
-      "&sort=datedesc" +
-      "&format=json";
+    const rssUrl =
+      "https://news.google.com/rss/search?" +
+      new URLSearchParams({
+        q: query,
+        hl: "en-US",
+        gl: "US",
+        ceid: "US:en"
+      }).toString();
 
-    console.log("GDELT URL:", url);
-
-    const response = await fetch(url);
-
-    // 先取得文字，而不是直接假設一定是 JSON
-    const text = await response.text();
+    const response = await fetch(rssUrl, {
+      headers: {
+        "User-Agent":
+          "Mozilla/5.0 Global-Finance-Radar/1.0"
+      }
+    });
 
     if (!response.ok) {
-      return res.status(500).json({
-        success: false,
-        error: "GDELT 回應失敗",
-        status: response.status,
-        detail: text.slice(0, 500)
-      });
+      throw new Error(
+        `Google News RSS 回應錯誤：${response.status}`
+      );
     }
 
-    let data;
+    const xml = await response.text();
 
-    try {
-      data = JSON.parse(text);
-    } catch (e) {
-      return res.status(500).json({
-        success: false,
-        error: "GDELT 回傳的不是 JSON",
-        detail: text.slice(0, 500)
-      });
-    }
+    const items =
+      [...xml.matchAll(/<item>([\s\S]*?)<\/item>/g)];
 
     const articles =
-      Array.isArray(data.articles)
-        ? data.articles
-        : [];
+      items.slice(0, 30).map(match => {
 
-    const cleanedArticles =
-      articles.map(article => ({
-        title:
-          article.title || "無標題",
+        const item = match[1];
 
-        url:
-          article.url || "#",
+        const title =
+          getTag(item, "title");
 
-        source:
-          article.domain ||
-          article.sourcecountry ||
-          "未知來源",
+        const link =
+          getTag(item, "link");
 
-        language:
-          article.language || "",
+        const pubDate =
+          getTag(item, "pubDate");
 
-        date:
-          article.seendate || "",
+        const source =
+          getSource(item);
 
-        image:
-          article.socialimage || ""
-      }));
+        return {
+          title: cleanText(title),
+          url: cleanText(link),
+          source: cleanText(source || "Google News"),
+          date: pubDate,
+          language: "English"
+        };
+
+      }).filter(article =>
+        article.title &&
+        article.url
+      );
+
 
     res.setHeader(
       "Cache-Control",
@@ -77,10 +69,10 @@ export default async function handler(req, res) {
 
     return res.status(200).json({
       success: true,
-      source: "GDELT",
+      source: "Google News RSS",
       updatedAt: new Date().toISOString(),
-      count: cleanedArticles.length,
-      articles: cleanedArticles
+      count: articles.length,
+      articles: articles
     });
 
   } catch (error) {
@@ -89,9 +81,92 @@ export default async function handler(req, res) {
 
     return res.status(500).json({
       success: false,
-      error: "伺服器發生錯誤",
+      error: "目前無法取得新聞",
       detail: error.message
     });
 
   }
+}
+
+
+/* 取得一般 XML 標籤 */
+
+function getTag(xml, tag) {
+
+  const regex =
+    new RegExp(
+      `<${tag}[^>]*>([\\s\\S]*?)<\\/${tag}>`,
+      "i"
+    );
+
+  const match =
+    xml.match(regex);
+
+  if (!match) {
+    return "";
+  }
+
+  return match[1];
+
+}
+
+
+/* Google News 的 source 有屬性 */
+
+function getSource(xml) {
+
+  const match =
+    xml.match(
+      /<source[^>]*>([\s\S]*?)<\/source>/i
+    );
+
+  return match
+    ? match[1]
+    : "";
+
+}
+
+
+/* 清除 XML / HTML 特殊格式 */
+
+function cleanText(text) {
+
+  if (!text) {
+    return "";
+  }
+
+  return text
+
+    .replace(
+      /<!\[CDATA\[([\s\S]*?)\]\]>/g,
+      "$1"
+    )
+
+    .replace(
+      /&amp;/g,
+      "&"
+    )
+
+    .replace(
+      /&quot;/g,
+      '"'
+    )
+
+    .replace(
+      /&#39;/g,
+      "'"
+    )
+
+    .replace(
+      /&lt;/g,
+      "<"
+    )
+
+    .replace(
+      /&gt;/g,
+      ">"
+    )
+
+    .trim();
+
 }
